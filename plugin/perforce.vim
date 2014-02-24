@@ -103,7 +103,7 @@ if( strlen( &rulerformat ) == 0 ) && ( p4SetRuler == 1 )
 endif
 
 "Basic check for p4-enablement
-if executable( "p4.exe" )
+if executable( "p4.exe" ) || executable( "p4" )
     let s:PerforceExecutable="p4" 
 else
     augroup! perforce
