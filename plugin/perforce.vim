@@ -334,7 +334,10 @@ function s:P4OpenFileForEdit()
     endif
     let listnum = ""
     let listnum = s:P4GetChangelist( "Current changelists:\n" . s:P4GetChangelists(0) . "\nEnter changelist number: ", b:changelist )
-    if listnum == ""
+    if listnum == "new"
+	let result = s:P4CreateChangelist()
+	let listnum = split(result)[1]
+    elseif listnum == ""
         echomsg "No changelist specified. Edit cancelled."
         return
     endif
@@ -605,6 +608,7 @@ function s:P4CreateChangelist()
         let cmd = s:P4GetShellCommand( "change -i" )
         let result = system ( cmd, "Description: " . desc . "\nChange: new")
         echo result
+	return result
     endif
 endfunction
 
