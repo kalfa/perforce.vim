@@ -309,6 +309,10 @@ endfunction
 " is altered for the first time
 "----------------------------------------------------------------------------
 function s:P4OpenFileForEditWithPrompt()
+    if s:P4Where() == "0"
+	 " file not under //depot, skip edit confirmation
+	 return
+    endif
     let action=confirm("File is read only.  p4 Edit the file?" ,"&Yes\n&No", 1, "Question")
     if action == 1
          call s:P4OpenFileForEdit()
@@ -706,6 +710,10 @@ function s:P4SubmitChangelist()
     endif
 endfunction
 
+function s:P4Where()
+    let foo = s:P4ShellCommandCurrentBuffer("where")
+    return foo
+endfunction
 "----------------------------------------------------------------------------
 " Get general perforce info
 "----------------------------------------------------------------------------
